@@ -14,3 +14,88 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for effect */
   border-radius: 8px; /* Optional: rounded corners */
 }
+
+#map svg {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#map circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio, 0)),
+    var(--color-arrivals)
+  );
+}
+
+#map svg circle {
+  fill-opacity: 0.75;
+  stroke: white;
+  stroke-width: 1;
+  pointer-events: auto;
+  fill: var(--color);
+}
+
+header {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+}
+
+header label {
+  margin-left: auto;
+}
+
+#time-slider {
+  width: 500px;
+}
+
+#selected-time,
+#any-time {
+  display: block;
+  text-align: right;
+}
+
+#any-time {
+  color: gray;
+  font-style: italic;
+}
+.legend {
+  display: flex;
+  gap: 2em;
+  margin-block: 1em;
+  padding-left: 1em;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+/* Optional label for clarity */
+.legend-label {
+  font-size: small;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Each legend item */
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 0.4em; /* Small gap between swatch and text */
+}
+
+/* Color swatch using ::before */
+.legend > div:not(.legend-label)::before {
+  content: "";
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: var(--color);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px #0003;
+}
